@@ -301,7 +301,9 @@ ORDER BY Shelf DESC
 
 --FUNCTIONS in SQL
 
---NUMERICAL functions, 
+--NUMERICAL functions,
+
+--Added this comment for Git learning purpose
 
 
 -------------------------------------------------------------------------------
