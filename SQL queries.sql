@@ -32,6 +32,18 @@ from HumanResources.Employee where year(BirthDate) >'1985';
 Select StateProvinceCode, CountryRegionCode from Person.StateProvince
 where StateProvinceCode <> CountryRegionCode
 
+
+Select StateProvinceCode, CountryRegionCode from Person.StateProvince
+where StateProvinceCode = CountryRegionCode
+
+
+Select StateProvinceCode, CountryRegionCode from Person.StateProvince
+where StateProvinceCode < CountryRegionCode
+
+
+Select StateProvinceCode, CountryRegionCode from Person.StateProvince
+where StateProvinceCode > CountryRegionCode
+
 -------------------------------------------------------------------------------
 
 --ARITHMETIC OPERATORS	  +, -, *, /
@@ -101,11 +113,14 @@ where ModifiedDate between '20140202' AND '20150812';
 --CAST FUNCTION
 Select Birthdate from HumanResources.Employee -- it is in date type
 
-Select CAST(Birthdate as datetime) from HumanResources.Employee
+Select CAST(Birthdate as datetime) As 'BirthDateTime' from HumanResources.Employee
 
 SELECT CAST('2020-02-03' as datetime) AS 'TEST'
+SELECT CAST('20200203' as datetime) AS 'TEST'
 
 Select CAST(1.734 AS int);
+
+--not showing ----- Select CAST(5 as float);
 
 Select PurchaseOrderID, ModifiedDate from Purchasing.PurchaseOrderDetail
 where Cast(ModifiedDate as date) between '2014-02-03' AND '2015-08-12'
@@ -131,10 +146,10 @@ Select BusinessEntityId, Jobtitle from HumanResources.Employee where Jobtitle LI
 --LIKE with [...] char clause
 
 Select * from Person.StateProvince where StateProvinceCode LIKE 'A[BKL]%'
---Can be 'AB ', 'AK ', 'AL '
+--Can be 'AB', 'AK', 'AL'
 
 Select * from Person.StateProvince where StateProvinceCode LIKE '[IL]A%'
---starts with I or L ends with 'A '
+--starts with I or L ends with 'A'
 
 Select * from Person.StateProvince where StateProvinceCode LIKE '%[IL][ABCDEFG]%'
 --Getting IA, IB, etc
@@ -158,7 +173,7 @@ Select * from Person.StateProvince where StateProvinceCode LIKE 'A[BKL]_'
 
 Select * from Person.StateProvince where name LIKE 'AL____'
 
-Select * from Person.StateProvince where name LIKE 'AL____'
+Select * from Person.StateProvince where name LIKE 'AL__'
 
 -------------------------------------------------------------------------------
 --ESCAPING CHARACTERS
