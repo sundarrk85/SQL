@@ -317,15 +317,400 @@ ORDER BY Shelf DESC
 --FUNCTIONS in SQL
 
 --NUMERICAL functions,
+--sum(), avg(), max(), min(), count() 
 
---Added this comment for Git learning purpose
+Select SUm(All StandardCost) from Production.Product --same
+Select SUm(StandardCost) from Production.Product --same
 
---Added this comment from remote repo
+Select SUm(Distinct StandardCost) from Production.Product
+
+Select Makeflag, Avg(Standardcost) as AverageCost from Production.Product group by MakeFlag
+
+Select Count(*) from Production.Product 
+
+Select Count(*) from Production.Product where Color is not null
+
+Select Makeflag, MAX(StandardCost) as MaxStdCost from Production.Product 
+Group by Makeflag
+order by Max(StandardCost)
+
+
+--LESS USED NUMBER FUNCTIONS
+Select abs(-12345.45) 
+Select abs(+12345.45) 
+Select abs($12345.45) 
+Select standardCost, CEILING(StandardCost) from Production.Product 
+Select standardCost, FLOOR(StandardCost) from Production.Product 
+--Ceiling - >= to that value
+--Floor   - <= to that value
+Select RAND()
+Select RAND() + 3		--Rand value greater than 3
+Select RAND()*5 + 3    
+Select ROUND(45.1245,2)
+Select ROUND(45.1245,3)
+
 -------------------------------------------------------------------------------
 
+--STRING FUNCTIONS IN SQL
+SELECT CHARINDEX('D','DAD'); -- returns the position of the char
+SELECT CHARINDEX('D','DAD',2);
+ 
+SELECT Name
+FROM Production.Product
+ 
+SELECT Name, CHARINDEX('Cr', Name)
+FROM Production.Product;
+ 
+SELECT Name, CHARINDEX('Cr', Name)
+FROM Production.Product
+WHERE Name LIKE '%Cr%';
+
+
+SELECT FirstName,Datalength(FirstName) AS NumberOfBytes
+FROM Person.Person
+GROUP BY FirstName;
+ 
+SELECT FORMAT(20200616,'####/##/##');
+
+SELECT FirstName,LEFT(FirstName,2) AS ExtractNameFromLeft
+FROM Person.Person;
+ 
+SELECT FirstName,RIGHT(FirstName,2) AS ExtractNameFromRight
+FROM Person.Person;
+ 
+SELECT FirstName,LEN(FirstName) AS ExtractLengthOfName
+FROM Person.Person;
+
+SELECT FirstName, LOWER(FirstName) AS LowerFName
+FROM Person.Person;
+ 
+SELECT FirstName, UPPER(FirstName) AS LowerFName
+FROM Person.Person;
+ 
+SELECT Ltrim('		Trim Left Side');
+ 
+SELECT rtrim('Trim Left Side		 ');
+ 
+SELECT trim('      Trim Both The Sides      ');
+
+SELECT Name, PATINDEX('%Ball%',Name)   --returns the first occurence
+FROM Production.Product
+WHERE Name LIKE '%Ball%';
+ 
+SELECT Name, Patindex('%Cr_nk%',Name)
+FROM Production.Product
+WHERE Name LIKE '%Cr%';
+ 
+SELECT LoginID, REPLACE(LoginID,'adventure-works','aw') AS ReplaceString
+FROM HumanResources.Employee;
+ 
+SELECT FirstName, REPLICATE(FirstName,3) AS ReplicateFName
+FROM Person.Person;
+
+SELECT FirstName, REVERSE(FirstName) AS ReverseFName
+FROM Person.Person;
+ 
+SELECT Top 100 LastName, Substring(LastName,3,5) AS SubstringLName
+FROM Person.Person
+ORDER BY LastName;
+ 
+SELECT ProductID, STR(ProductID) AS StringProductID
+FROM Production.Product;
+
+
 -------------------------------------------------------------------------------
---added comment on 27th Nov 2023
---added comment again
+
+--DATE FUNCTIONS IN SQL SERVER
+
+ /*
+ year - y, yyyy, yy
+ quarter - q, qq
+ month - m, mm
+ day - d, dd
+ hour - hh
+ minute - mi, n
+ seconds - s, ss
+ millisecond - ms
+ */
+
+ SELECT ProductID, SellStartDate,dateadd(yyyy,3,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(q,3,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(m,3,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(d,3,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(hh,3,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(n,50,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,dateadd(s,10,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,SellEndDate, dateadd(ms,50,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,SellEndDate, dateadd(m,50,sellstartdate) AS NewSellStartDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,SellEndDate, datediff(yyyy,sellstartdate,sellenddate) AS diffDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,SellEndDate, datediff(q,sellstartdate,sellenddate) AS diffDate
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,SellEndDate, datediff(q,sellstartdate,sellenddate) AS diffDate
+FROM Production.Product
+WHERE SellEndDate IS NOT NULL;
+
+SELECT ProductID, SellStartDate,datepart(month,sellstartdate) AS Extractmonth
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,day(sellstartdate) AS ExtractDay
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,month(sellstartdate) AS ExtractMonth
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,year(sellstartdate) AS ExtractYear
+FROM Production.Product;
+
+SELECT ProductID, SellStartDate,datename(month,sellstartdate) AS Extractmonth
+FROM Production.Product;
+ 
+SELECT ProductID, SellStartDate,eomonth(sellstartdate) AS EndOfMonth
+FROM Production.Product;
+
+SELECT CURRENT_TIMESTAMP;
+SELECT getdate();
+SELECT sysdatetime();
+SELECT SYSDATETIMEOFFSET(); -- more accurate
+
+SELECT SellStartDate, isdate(SellStartDate)
+FROM Production.Product;
+ 
+SELECT isdate(1) As booleanValue;
+
+-------------------------------------------------------------------------------
+
+-- GENERAL FUNCTIONS
+ 
+SELECT isnull(NULL,'Abc');  --returns boolean
+ 
+SELECT isnull('123','Abc');  -- returns '123' if it is not null else returns 'Abc'
+ 
+SELECT isnull(NULL,0);  --return 0
+ 
+SELECT isnull(0,5);
+ 
+SELECT isnull(' ',5);  --returns ' '
+ 
+SELECT Color, isnull(Color,'hello') as CheckforNull
+FROM Production.Product;
+ 
+SELECT StandardCost, isnumeric(StandardCost) AS testNumeric
+FROM Production.Product;
+ 
+SELECT Color, isnumeric(Color) AS testNumeric
+FROM Production.Product;
+
+SELECT coalesce(NULL,NULL,'Welcome',NULL,'SQL');		-- returns first non null value from the list
+ 
+SELECT coalesce(NULL,NULL,NULL,NULL,'SQL');
+ 
+SELECT Title, MiddleName, coalesce(title,middlename)
+FROM Person.Person;
+ 
+SELECT NULLIF(14,12);		
+
+SELECT NULLIF(12,NULL);	
+ 
+SELECT StandardCost, convert(nvarchar(20),StandardCost) AS convertedType
+FROM Production.Product;
+ 
+SELECT ProductId,StandardCost, ListPrice, 
+ iif(ListPrice>=StandardCost,'Profit','Loss') AS testCondition
+FROM Production.Product
+WHERE Listprice < StandardCost;
+ 
+SELECT ProductId,StandardCost, ListPrice, 
+ iif(ListPrice>=StandardCost,'Profit','Loss') AS testCondition
+FROM Production.Product;
+--WHERE Listprice < StandardCost;
+ 
+SELECT ProductId,StandardCost, ListPrice, 
+ iif(ListPrice<StandardCost,'Profit','Loss') AS testCondition
+FROM Production.Product;
+--WHERE Listprice < StandardCost;
+
+-------------------------------------------------------------------------------
+
+-- HAVING CLAUSE
+
+/*Mostly used to fliter records of aggregate function or records where Gorup 
+By clause is used*/
+
+SELECT max(StandardCost)
+FROM Production.Product
+HAVING max(standardCost) > 200;
+ 
+SELECT DueDate,Sum(OrderQty) AS TotalOrderPerDueDate
+FROM Purchasing.PurchaseOrderDetail
+WHERE YEAR(DueDate) > 2011 AND Month(DueDate) < 9
+GROUP BY DueDate
+ORDER BY DueDate DESC;
+ 
+SELECT DueDate,Sum(OrderQty) AS TotalOrderPerDueDate
+FROM Purchasing.PurchaseOrderDetail
+WHERE YEAR(DueDate) > 2011 AND Month(DueDate) < 9 
+GROUP BY DueDate
+HAVING sum(OrderQty) < 6000
+ORDER BY DueDate DESC;
+ 
+SELECT DueDate,Sum(OrderQty) AS TotalOrderPerDueDate
+FROM Purchasing.PurchaseOrderDetail
+--WHERE YEAR(DueDate) > 2011 AND Month(DueDate) < 9 
+GROUP BY DueDate
+HAVING sum(OrderQty) < 6000
+ORDER BY DueDate DESC;
+
+-------------------------------------------------------------------------------
+
+--SUB QUERY
+
+SELECT NationalIDNumber, JobTitle, HireDate
+FROM HumanResources.Employee
+WHERE BusinessEntityID IN
+   (SELECT BusinessEntityID
+     FROM HumanResources.EmployeeDepartmentHistory
+   )
+ORDER BY JobTitle;
+ 
+SELECT BusinessEntityID,NationalIDNumber, JobTitle, HireDate
+FROM HumanResources.Employee
+WHERE BusinessEntityID IN
+   (SELECT BusinessEntityID
+     FROM HumanResources.EmployeeDepartmentHistory
+   )
+ORDER BY JobTitle;
+ 
+SELECT BusinessEntityID,NationalIDNumber, JobTitle, HireDate
+FROM HumanResources.Employee
+WHERE BusinessEntityID IN
+   (SELECT BusinessEntityID
+     FROM HumanResources.EmployeeDepartmentHistory
+	 WHERE BusinessEntityID <= 100
+   )
+ORDER BY JobTitle;
+
+SELECT Min(UnitPrice)
+FROM Purchasing.PurchaseOrderDetail
+WHERE UnitPrice IN
+  (SELECT TOP 2 UnitPrice
+   FROM Purchasing.PurchaseOrderDetail
+   ORDER BY UnitPrice DESC
+  );
+ 
+SELECT Min(UnitPrice)
+FROM Purchasing.PurchaseOrderDetail
+WHERE UnitPrice IN
+  (SELECT TOP 3 UnitPrice
+   FROM Purchasing.PurchaseOrderDetail
+   ORDER BY UnitPrice DESC
+  );
+ 
+SELECT Min(UnitPrice)
+FROM Purchasing.PurchaseOrderDetail
+WHERE UnitPrice IN
+  (SELECT TOP 3 UnitPrice
+   FROM Purchasing.PurchaseOrderDetail
+   GROUP BY UnitPrice
+   ORDER BY UnitPrice DESC
+  );
+ 
+ 
+SELECT PurchaseOrderID, UnitPrice
+FROM Purchasing.PurchaseOrderDetail
+WHERE UnitPrice >
+ (SELECT Avg(ListPrice)
+  FROM Production.Product
+ );
+ 
+SELECT PurchaseOrderID, UnitPrice
+FROM Purchasing.PurchaseOrderDetail
+WHERE UnitPrice <
+ (SELECT Avg(ListPrice)
+  FROM Production.Product
+ );
+
+--EXISTS 
+SELECT *
+FROM HumanResources.Employee;
+ 
+SELECT *
+FROM HumanResources.Department;
+ 
+SELECT BusinessEntityId, JobTitle 
+FROM HumanResources.Employee
+WHERE EXISTS							-- returns true to the main query if exists
+  (SELECT DepartmentID
+   FROM HumanResources.Department
+   WHERE Name = 'Sales'
+  );
+ 
+SELECT BusinessEntityId, JobTitle 
+FROM HumanResources.Employee
+WHERE EXISTS
+  (SELECT DepartmentID
+   FROM HumanResources.Department
+   WHERE Name = 'Sales'
+  ) AND JobTitle LIKE '%Sales%';
+
+--Nested sub query
+SELECT ProductSubCategoryID
+FROM Production.Product
+WHERE ProductSubCategoryID IN
+ (SELECT ProductSubCategoryID
+  FROM Production.ProductSubcategory
+  WHERE ProductCategoryID IN
+   (SELECT ProductCategoryID 
+    FROM Production.ProductCategory
+	WHERE Name LIKE '%Bikes%'
+   )
+  );
+ 
+SELECT DISTINCT ProductSubCategoryID
+FROM Production.Product
+WHERE ProductSubCategoryID IN
+ (SELECT ProductSubCategoryID
+  FROM Production.ProductSubcategory
+  WHERE ProductCategoryID IN
+   (SELECT ProductCategoryID 
+    FROM Production.ProductCategory
+	WHERE Name LIKE '%Bikes%'
+   )
+  );
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
 
 
